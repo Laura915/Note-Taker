@@ -8,6 +8,7 @@ app.use(express.json());
 app.use(express.static(__dirname + "/public"));
 
 //Routes
+require("./routing/apiRoutes")(app);
 require("./routing/htmlRoutes")(app);
 
 
