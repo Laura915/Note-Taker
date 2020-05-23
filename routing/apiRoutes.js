@@ -2,7 +2,6 @@ const fs = require("fs");
 let noteData = require("../db/db");
 
 module.exports = function (app) {
-
     // Get db.json data
     app.get("/api/notes", function (req, res) {
         res.json(noteData);
@@ -15,37 +14,35 @@ module.exports = function (app) {
         const num = (Math.floor(Math.random() * 100)).toString();
         const title = note.title;
         const text = note.text;
-        const newNote = {title,text,id: num}
+        const newNote = { title, text, id: num }
 
         noteData.push(newNote);
-        console.log(newNote.id);
-        // write new file with newly parsed data from 'noteData' 
+
+        // write new file with newly added note
         fs.writeFile("db/db.json", JSON.stringify(noteData, null, 2), err => {
             if (err) throw err;
 
-            console.log("new noteData made it in the console");
-
+            console.log("New note added");
         })
-        //res.send or res.end will end post
         res.json(noteData);
     });
 
     //delete Should receive a query parameter containing the id of a note to delete
     app.delete("/api/notes/:id", (req, res) => {
-        //Selected note
-        const unwatedNote = req.params.id 
+        //Selected unwanted note
+        const unwatedNote = req.params.id
 
         // Filter to show only the selected note
-        noteData=noteData.filter(function(note){
+        noteData = noteData.filter(function (note) {
             return note.id !== unwatedNote;
         });
-        // console.log(noteData);
 
-        //remove the note with the given id property, 
+        //rewrite the notes to the db.json file.
+        fs.writeFile("db/db.json", JSON.stringify(noteData, null, 2), err => {
+            if (err) throw err;
 
-        //and then rewrite the notes to the db.json file.
-
-        //res.send or res.end will end post
+            console.log("Note deleted");
+        })
         res.json(noteData);
     });
 };
