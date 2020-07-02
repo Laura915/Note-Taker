@@ -2,7 +2,9 @@
   # Note-Taker
 
  ## Description 
- This application allows user to write new notes, save notes and delete notes.
+ This application allows user to write, save and delete notes. Click on the link below to interact with the application! 
+
+ ### https://note-taker-laura.herokuapp.com/notes
 
   ## Table of Contents
 
